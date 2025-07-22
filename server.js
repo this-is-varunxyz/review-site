@@ -8,7 +8,7 @@ const app = express();
 
 // Google Services Setup
 const auth = new google.auth.GoogleAuth({
-  keyFile: 'google-sheets-key.json',
+  credentials: JSON.parse(process.env.GOOGLE_SHEETS_KEY), // Parse the JSON string
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 const sheets = google.sheets({ version: 'v4', auth });
