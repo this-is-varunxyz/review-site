@@ -789,6 +789,31 @@ body {
         }
     }
 
+    // Handle star rating
+    document.querySelectorAll('.rating-container').forEach(container => {
+        const stars = container.querySelectorAll('.star');
+        const ratingType = container.dataset.rating;
+        
+        stars.forEach(star => {
+            ['click', 'touchstart'].forEach(eventType => {
+                star.addEventListener(eventType, function(e) {
+                    e.preventDefault();
+                    const value = parseInt(this.dataset.value);
+                    ratings[ratingType] = value;
+                    
+                    // Update star appearance
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.value) <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    });
+
     // Rest of your existing code remains the same...
     // [Keep all your existing functions like loadFacultyDetails, loadFacultyAverages, etc.]
     
