@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "linen-epigram-466120-p6",
+  "private_key_id": "ee10f25ed14371ec02b4e866e2683d22a09799f1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+QmROTN0eKRLo\nRrpqx1PfJbiuB3afCpMu5LJmsFL+WtOYTz19ncP58tQQ9Znn9dirReyO+bJEfVWf\newApSJAdk6c0AdcXLd+HU0jZdAG+6+60la0xJnWzHNXHwWJ8P0lckFoO7S+LQZpR\nBrLkYOgzGoipAhGJPcfovFdzdvAElYjdv9JVVzUNPnU4p4+3Bz2I1yfs1eSptzlC\nsfCZ8Vo/j4FokO2SkKzgSAAeDTobf6ImHFHsoKeFGxTA43tkkKfvAChnAO3tL3p8\n9sV6V7LVEswtsvqtgm+DPQCWTgLmptjeBLVR8D6NGVNNPSPjPlqTOQVNspFbc8nt\n2b7Sj4YvAgMBAAECggEAB0vCJJ3eStugsyc8hdS6pXorq1dzl+S5a9kZnZt8YJmj\nYe9ZTc8LfAhw/mzUp+hYad+mvdLbIF+StX4WLanFMQUqVRxkSaoY13Z8+thv1V5J\ny0NZdA2OrOgvAIKCIClIdb6+srIrb70mdEimpTWxdyg407ZVwtFg2vlspxZesjuS\nyp24DOO7g3jBUa4QElNTwN7aroA5xJ34HMQVMJ8OTpLoO2WdL377qUsToa34lkxs\nYdVNgYqAb7GiNl9svHbWqvyE2vTTvs56Z2JACGYHTD7VBhu7HggN+U6pQMWaWcfP\nwYQ7uZ2kEjEwN+LDmmi5icwSNE9bsUU3cBg4U6lMbQKBgQDsS8V4lJWBDLB3cYO1\nXyGqoRXSyYFc8VvdV6H2NN/AFWBWg8EWwsrJW800gaC1gwsRUpkgV4KEaRyUJ3UV\nyqdFiHflWjnvlpg+3/H0PXW97dDKWJVHlUohcP7Ak+WnDZhg1flpbbNvSffdcoaE\nsnbD8YCmTSoh6LErScKtzTKOiwKBgQDOH99suPPHZ0GzK2LDD9sKN+B7AxU2KRQi\nEdo/5VdADaQB/6J3rUZoUcLnyL21wEzFBalS8RUs61SJHwuUAuiJ/gkEPJER96GV\npAx3MTrhZwyjH1k7mVTX2xIATPPU1vOod9LONRRz36sjVlxJeMOE7BYejTM57EI7\nxIjWzRIfbQKBgQCg9kCPEhABd4Zh5vaEP0hstgxqqQ8xI8yjK4XNdFkSvL0CUf/f\nJFQE9D8FzGOQIbMRWsWqbVIgJoXsOjCc5o4pZHvfxSWAGoKdGen0qUUiWvSGUe9m\ncsCrpRA0WMrwj+dD155tfefkIGvy8ofFrtgOQ92R6zCPJrZBOZ6ezA/rXwKBgQCX\nIzu6BquJTKcZ7vgNuzSK+4m36PzGp7xBdwGm1EzzhIz7givowL7dgwX82m5wND6W\nQJ51WJyEQVHM8VyV/MPxWrnVx2s/12k9xfn1870OxXa4rSXK05UoaVN7sPEg4TPs\nFWAXH0iN5jUgRhSJMul6L3nQkQw8roWqOWN0zQ06yQKBgBfUq5GpmK7E7AMA8lm/\niujVKQMYbPppiKO8mTgw8IC2SrPp2ugHeTJGEaNWesN+qZauiNL/9XhdqYV7FUz+\n6MgkSAdr4TEAJsQTi6zBDPVHXtsflc1mTo7RkKuFIhSFOZushj5YSweqyOgoEttl\nmxHloPnA9J8p5xQ08eYH5TCY\n-----END PRIVATE KEY-----\n",
+  "client_email": "whatsapp-bot-sheets@linen-epigram-466120-p6.iam.gserviceaccount.com",
+  "client_id": "106246301838592075997",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/whatsapp-bot-sheets%40linen-epigram-466120-p6.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

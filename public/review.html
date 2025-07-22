@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Review System</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #000000;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 120, 120, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(120, 120, 120, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 120, 120, 0.05) 0%, transparent 50%);
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 12px;
+    line-height: 1.4;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 580px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: translateY(50px);
+    animation: containerSlide 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes containerSlide {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+@keyframes slideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.header h1 {
+    font-size: 2em;
+    margin-bottom: 6px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.header p {
+    font-size: 0.95em;
+    opacity: 0.7;
+    color: #cccccc;
+    font-weight: 400;
+}
+
+.form-container {
+    padding: 20px;
+    background: transparent;
+}
+
+.faculty-details {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideRight 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+@keyframes slideRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.faculty-details h3 {
+    color: #ffffff;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.faculty-details p {
+    margin: 2px 0;
+    color: #aaaaaa;
+    font-size: 0.85em;
+}
+
+.faculty-info {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+}
+
+@keyframes slideLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.faculty-info:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.faculty-name {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.faculty-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 0.95em;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    color: #ffffff;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+}
+
+.faculty-input::placeholder {
+    color: #666666;
+}
+
+.faculty-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.rating-group {
+    margin-bottom: 14px;
+    padding: 8px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.rating-group:nth-child(1) { animation-delay: 0.8s; }
+.rating-group:nth-child(2) { animation-delay: 0.9s; }
+.rating-group:nth-child(3) { animation-delay: 1s; }
+.rating-group:nth-child(4) { animation-delay: 1.1s; }
+.rating-group:nth-child(5) { animation-delay: 1.2s; }
+.rating-group:nth-child(6) { animation-delay: 1.3s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rating-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+    display: block;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+    padding: 6px 0;
+}
+
+.star {
+    font-size: 1.8em;
+    color: transparent;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.5, 0.64, 1);
+    user-select: none;
+    position: relative;
+    background: linear-gradient(45deg, #333333, #2a2a2a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.star::before {
+    content: '★';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(45deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transition: all 0.2s cubic-bezier(0.34, 1.5, 0.64, 1);
+    transform: scale(0.8) rotate(-10deg);
+}
+
+.star::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.star:hover {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.2));
+}
+
+.star:hover::before {
+    opacity: 0.7;
+    transform: scale(1) rotate(0deg);
+}
+
+.star:hover::after {
+    width: 30px;
+    height: 30px;
+    opacity: 0.3;
+}
+
+.star.active {
+    transform: scale(1.05);
+    animation: starActivate 0.4s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+.star.active::before {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+}
+
+.star.active::after {
+    width: 35px;
+    height: 35px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    animation: starGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes starActivate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(1.05); }
+}
+
+@keyframes starGlow {
+    0% { opacity: 0.2; }
+    100% { opacity: 0.5; }
+}
+
+.average-container {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 16px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: scale(0.95);
+    animation: scaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.4s forwards;
+}
+
+@keyframes scaleIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.average-container h3 {
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.average-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.average-item {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px 6px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(5px);
+}
+
+.average-item:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.average-item .label {
+    font-weight: 600;
+    color: #aaaaaa;
+    margin-bottom: 3px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.average-item .value {
+    font-size: 1em;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1px;
+}
+
+.average-item .count {
+    font-size: 0.7em;
+    color: #777777;
+}
+.count{
+    display: none;
+}
+
+.class-average-input {
+    margin: 16px 0;
+    text-align: center;
+    padding: 12px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
+}
+
+.class-average-input label {
+    display: block;
+    font-size: 1em;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.class-average-input input {
+    width: 90px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+}
+
+.class-average-input input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+.class-average-input .note {
+    font-size: 0.8em;
+    color: #777777;
+    margin-top: 4px;
+}
+
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+    color: #000000;
+    border: none;
+    padding: 12px 18px;
+    font-size: 1em;
+    font-weight: 700;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 50%, #f8f8f8 100%);
+}
+
+.submit-btn:hover::before {
+    left: 100%;
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    background: #333333;
+    color: #666666;
+}
+
+.success-message, .error-message {
+    padding: 14px;
+    border-radius: 14px;
+    text-align: center;
+    margin-top: 16px;
+    display: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+    animation: messageSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.success-message {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    border-color: rgba(34, 197, 94, 0.2);
+    color: #ffffff;
+}
+
+.error-message {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #ffffff;
+}
+
+.success-message h3, .error-message h3 {
+    margin-bottom: 4px;
+    font-size: 1.1em;
+}
+
+@keyframes messageSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-triggered animations */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    body { padding: 8px; }
+    .container { border-radius: 20px; }
+    .form-container { padding: 16px; }
+    .header { padding: 16px; }
+    .header h1 { font-size: 1.8em; }
+    .star { font-size: 1.6em; }
+    .average-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .rating-group { margin-bottom: 12px; }
+    .rating-container { gap: 3px; padding: 4px 0; }
+}
+
+@media (max-width: 480px) {
+    .star { font-size: 1.5em; }
+    .rating-container { gap: 2px; }
+    .header h1 { font-size: 1.6em; }
+    .average-grid { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Faculty Review</h1>
+            <p>Share your honest feedback to help fellow students</p>
+        </div>
+
+        <div class="form-container">
+            <div id="facultyDetails" class="faculty-details" style="display: none;">
+                <h3 id="facultyNameDisplay"></h3>
+               
+                <p id="facultyCabin"></p>
+            </div>
+
+            <div class="faculty-info">
+                <div class="faculty-name">Faculty Name</div>
+                <input type="text" id="facultyNameInput" class="faculty-input" placeholder="Enter faculty name..." required>
+            </div>
+
+            <div id="averageContainer" class="average-container" style="display: none;">
+                <h3>📊 Faculty Averages</h3>
+                <div class="average-grid">
+                    <div class="average-item">
+                        <div class="label">Teaching</div>
+                        <div class="value" id="avgTeaching">-</div>
+                        <div class="count" id="countTeaching">0 reviews</div>
+                    </div>
+                    <div class="average-item">
+                        <div class="label">Evaluation</div>
+                        <div class="value" id="avgEvaluation">-</div>
+                        <div class="count" id="countEvaluation">0 reviews</div>
+                    </div>
+                    <div class="average-item">
+                        <div class="label">Behaviour</div>
+                        <div class="value" id="avgBehaviour">-</div>
+                        <div class="count" id="countBehaviour">0 reviews</div>
+                    </div>
+                    <div class="average-item">
+                        <div class="label">Internals</div>
+                        <div class="value" id="avgInternals">-</div>
+                        <div class="count" id="countInternals">0 reviews</div>
+                    </div>
+                    <div class="average-item">
+                        <div class="label">Class Avg</div>
+                        <div class="value" id="avgClassAverage">-</div>
+                        <div class="count" id="countClassAverage">0 reviews</div>
+                    </div>
+                    <div class="average-item">
+                        <div class="label">Overall</div>
+                        <div class="value" id="avgOverall">-</div>
+                        <div class="count" id="countOverall">0 reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="reviewForm">
+                <!-- Teaching Rating -->
+                <div class="rating-group">
+                    <label class="rating-label">📖 Teaching</label>
+                    <div class="rating-container" data-rating="teaching">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <!-- Evaluation Rating -->
+                <div class="rating-group">
+                    <label class="rating-label">📝 Evaluation</label>
+                    <div class="rating-container" data-rating="evaluation">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <!-- Behaviour Rating -->
+                <div class="rating-group">
+                    <label class="rating-label">😊 Behaviour</label>
+                    <div class="rating-container" data-rating="behaviour">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <!-- Internals Rating -->
+                <div class="rating-group">
+                    <label class="rating-label">📊 Internals</label>
+                    <div class="rating-container" data-rating="internals">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <!-- Class Average Input -->
+                <div class="class-average-input">
+                    <label for="classAverage">📈 Your Class Average</label>
+                    <input type="number" id="classAverage" min="0" max="100" step="0.1" placeholder="e.g. 85.5" required>
+                    <div class="note">Enter your average percentage in this faculty's class</div>
+                </div>
+
+                <!-- Overall Rating -->
+                <div class="rating-group">
+                    <label class="rating-label">✨ Overall Rating</label>
+                    <div class="rating-container" data-rating="overall">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Submit Review
+                </button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <h3>🎉 Thank you for your feedback!</h3>
+                <p>Your review has been submitted successfully.</p>
+                <p id="successDetails"></p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <h3>❌ Submission Failed</h3>
+                <p id="errorDetails">Please try again or check your connection.</p>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // Rating system
+    const ratings = { 
+        teaching: 0, 
+        evaluation: 0, 
+        behaviour: 0,
+        internals: 0,
+        classAverage: 0,
+        overall: 0
+    };
+
+    // Local storage key for tracking reviewed faculty
+    const REVIEWED_FACULTY_KEY = 'reviewedFaculty';
+
+    // Safely check if faculty was already reviewed
+    function hasReviewedFaculty(facultyName) {
+        try {
+            const reviewedFaculty = localStorage.getItem(REVIEWED_FACULTY_KEY);
+            if (!reviewedFaculty) return false;
+            const facultyList = JSON.parse(reviewedFaculty);
+            return Array.isArray(facultyList) && facultyList.includes(facultyName.toLowerCase());
+        } catch (e) {
+            console.error('Error reading review history:', e);
+            return false;
+        }
+    }
+
+    // Safely mark faculty as reviewed
+    function markFacultyAsReviewed(facultyName) {
+        try {
+            const reviewedFaculty = JSON.parse(localStorage.getItem(REVIEWED_FACULTY_KEY) || '[]');
+            if (!Array.isArray(reviewedFaculty)) {
+                localStorage.setItem(REVIEWED_FACULTY_KEY, JSON.stringify([]));
+                return;
+            }
+            
+            const lowerName = facultyName.toLowerCase();
+            if (!reviewedFaculty.includes(lowerName)) {
+                reviewedFaculty.push(lowerName);
+                localStorage.setItem(REVIEWED_FACULTY_KEY, JSON.stringify(reviewedFaculty));
+            }
+        } catch (e) {
+            console.error('Error saving review history:', e);
+            localStorage.setItem(REVIEWED_FACULTY_KEY, JSON.stringify([]));
+        }
+    }
+
+    // Load faculty data from URL parameter when page loads
+    document.addEventListener('DOMContentLoaded', async function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const facultyNameFromUrl = urlParams.get('faculty');
+        
+        if (facultyNameFromUrl) {
+            try {
+                const decodedName = decodeURIComponent(facultyNameFromUrl);
+                document.getElementById('facultyNameInput').value = decodedName;
+                await loadFacultyDetails(decodedName);
+                await loadFacultyAverages(decodedName);
+            } catch (error) {
+                console.error('Error loading faculty data:', error);
+            }
+        }
+    });
+
+    // Load faculty details
+    async function loadFacultyDetails(facultyName) {
+        try {
+            const response = await fetch(`/api/faculty/${encodeURIComponent(facultyName)}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const faculty = await response.json();
+            
+            if (faculty && !faculty.error) {
+                document.getElementById('facultyNameDisplay').textContent = faculty.name;
+                document.getElementById('facultyDepartment').textContent = `Department: ${faculty.department}`;
+                document.getElementById('facultyCabin').textContent = `Cabin: ${faculty.cabin_no}`;
+                document.getElementById('facultyDetails').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error loading faculty details:', error);
+        }
+    }
+
+    // Load faculty averages and check review status
+    async function loadFacultyAverages(facultyName) {
+        try {
+            const response = await fetch(`/api/faculty-averages?faculty=${encodeURIComponent(facultyName)}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            
+            if (data && data.averages) {
+                // Update all average displays
+                document.getElementById('avgTeaching').textContent = `${data.averages.teaching || '-'}/5`;
+                document.getElementById('avgEvaluation').textContent = `${data.averages.evaluation || '-'}/5`;
+                document.getElementById('avgBehaviour').textContent = `${data.averages.behaviour || '-'}/5`;
+                document.getElementById('avgInternals').textContent = `${data.averages.internals || '-'}/5`;
+                document.getElementById('avgClassAverage').textContent = `${data.averages.classAverage || '-'}%`;
+                document.getElementById('avgOverall').textContent = `${data.averages.overall || '-'}/5`;
+                
+                // Update review counts
+                const reviewCount = data.averages.count || 0;
+                document.querySelectorAll('.count').forEach(el => {
+                    el.textContent = `${reviewCount} ${reviewCount === 1 ? 'review' : 'reviews'}`;
+                });
+                
+                document.getElementById('averageContainer').style.display = 'block';
+            }
+
+            // Disable form if already reviewed this faculty
+            const submitBtn = document.getElementById('submitBtn');
+            if (hasReviewedFaculty(facultyName)) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Already Reviewed';
+                submitBtn.classList.add('disabled-btn');
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Review';
+                submitBtn.classList.remove('disabled-btn');
+            }
+        } catch (error) {
+            console.error('Error loading faculty averages:', error);
+            document.getElementById('averageContainer').style.display = 'none';
+        }
+    }
+
+    // Handle star ratings
+    document.querySelectorAll('.rating-container').forEach(container => {
+        const ratingType = container.dataset.rating;
+        const stars = container.querySelectorAll('.star');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.dataset.value);
+                ratings[ratingType] = value;
+                
+                // Update visual feedback
+                stars.forEach((s, i) => {
+                    s.classList.toggle('active', i < value);
+                });
+            });
+
+            star.addEventListener('mouseenter', () => {
+                const value = parseInt(star.dataset.value);
+                stars.forEach((s, i) => {
+                    s.style.color = i < value ? '#ffd700' : '#ddd';
+                });
+            });
+
+            star.addEventListener('mouseleave', () => {
+                stars.forEach((s, i) => {
+                    s.style.color = i < ratings[ratingType] ? '#ffd700' : '#ddd';
+                });
+            });
+        });
+    });
+
+    // Handle faculty name changes
+    document.getElementById('facultyNameInput').addEventListener('change', async function() {
+        const facultyName = this.value.trim();
+        if (facultyName) {
+            await loadFacultyDetails(facultyName);
+            await loadFacultyAverages(facultyName);
+        } else {
+            document.getElementById('averageContainer').style.display = 'none';
+            document.getElementById('facultyDetails').style.display = 'none';
+        }
+    });
+
+    // Handle form submission
+    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const facultyName = document.getElementById('facultyNameInput').value.trim();
+        const classAverageInput = document.getElementById('classAverage');
+        const classAverage = parseFloat(classAverageInput.value);
+        
+        // Validate inputs
+        if (!facultyName) {
+            showError('Please enter faculty name.');
+            return;
+        }
+        
+        // Check if already reviewed this faculty
+        if (hasReviewedFaculty(facultyName)) {
+            showError('You have already reviewed this faculty. Each faculty can only be reviewed once.');
+            return;
+        }
+        
+        const requiredRatings = ['teaching', 'evaluation', 'behaviour', 'internals', 'overall'];
+        const missingRatings = requiredRatings.filter(rating => !ratings[rating]);
+        
+        if (missingRatings.length > 0) {
+            showError(`Please provide ${missingRatings.join(', ')} ratings before submitting.`);
+            return;
+        }
+        
+        if (isNaN(classAverage) || classAverage < 0 || classAverage > 100) {
+            showError('Please enter a valid class average between 0 and 100.');
+            classAverageInput.focus();
+            return;
+        }
+
+        const formData = {
+            name: facultyName,
+            teaching: ratings.teaching,
+            evaluation: ratings.evaluation,
+            behaviour: ratings.behaviour,
+            internals: ratings.internals,
+            classAverage: classAverage,
+            overall: ratings.overall
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+            const response = await fetch('/api/submit-review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || 'Failed to submit review');
+            }
+
+            // Mark faculty as reviewed
+            markFacultyAsReviewed(facultyName);
+
+            // Show success message
+            document.getElementById('reviewForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Update averages after submission
+            await loadFacultyAverages(facultyName);
+
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            showError(error.message || 'Please try again or check your connection.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Review';
+        }
+    });
+
+    // Helper function to show error messages
+    function showError(message) {
+        const errorElement = document.getElementById('errorMessage');
+        errorElement.style.display = 'block';
+        document.getElementById('errorDetails').textContent = message;
+        document.getElementById('successMessage').style.display = 'none';
+        
+        // Scroll to error message
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Add this to your CSS or style section
+    const style = document.createElement('style');
+    style.textContent = `
+        .disabled-btn {
+            opacity: 0.7;
+            cursor: not-allowed;
+            background: #555 !important;
+        }
+        #errorMessage {
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>
