@@ -242,7 +242,67 @@ app.post('/api/submit-review', async (req, res) => {
   }
 });
 
-// Other API endpoints remain the same...
+// API endpoint to get faculty details
+app.get('/api/faculty/:name', async (req, res) => {
+  try {
+    const facultyName = decodeURIComponent(req.params.name);
+    const facultyData = await getFacultyDataFromSheets();
+    
+    const faculty = facultyData.find(f => 
+      f.name.toLowerCase().trim() === facultyName.toLowerCase().trim()
+    );
+
+    if (!faculty) {
+      return res.status(404).json({
+        success: false,
+        error: 'Faculty not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: faculty
+    });
+  } catch (error) {
+    console.error('Error fetching faculty details:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch faculty details'
+    });
+  }
+});
+
+// API endpoint to get faculty averages
+app.get('/api/faculty-averages', async (req, res) => {
+  try {
+    const facultyName = req.query.faculty;
+    if (!facultyName) {
+      return res.status(400).json({
+        success: false,
+        error: 'Faculty name is required'
+      });
+    }
+
+    const averages = await getFacultyAverages(facultyName);
+    if (!averages) {
+      return res.status(404).json({
+        success: false,
+        error: 'No reviews found for this faculty'
+      });
+    }
+
+    res.json({
+      success: true,
+      averages
+    });
+  } catch (error) {
+    console.error('Error fetching faculty averages:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch faculty averages'
+    });
+  }
+});
 
 // Start Server
 const PORT = process.env.REVIEW_PORT || 3001;
