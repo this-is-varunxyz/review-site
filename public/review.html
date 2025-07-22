@@ -837,12 +837,35 @@ body {
         }
     });
 
+    // Function to show error message
+    function showError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        const errorDetails = document.getElementById('errorDetails');
+        errorDetails.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    // Function to show success message
+    function showSuccess(message) {
+        const successMessage = document.getElementById('successMessage');
+        const successDetails = document.getElementById('successDetails');
+        successDetails.textContent = message;
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 3000);
+    }
+
     // Handle form submission - add additional validation
     document.getElementById('reviewForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const submitBtn = document.getElementById('submitBtn');
         const facultyName = document.getElementById('facultyNameInput').value.trim();
+        const classAverage = document.getElementById('classAverage').value;
         const urlParams = new URLSearchParams(window.location.search);
         const facultyNameFromUrl = urlParams.get('faculty');
         
@@ -852,9 +875,37 @@ body {
             document.getElementById('facultyNameInput').value = decodeURIComponent(facultyNameFromUrl);
             return;
         }
-        
-        // Rest of your existing form validation and submission logic...
-        // [Keep all your existing form submission code]
+
+        // Validate all ratings are provided
+        for (const key in ratings) {
+            if (ratings[key] === 0 && key !== 'classAverage') {
+                showError('Please provide all ratings');
+                return;
+            }
+        }
+
+        // Validate class average
+        if (!classAverage || classAverage < 0 || classAverage > 100) {
+            showError('Please enter a valid class average between 0 and 100');
+            return;
+        }
+
+        try {
+            submitBtn.disabled = true;
+            // Add your API call here to submit the review
+            // For example:
+            // await submitReview(facultyName, ratings, classAverage);
+            
+            showSuccess('Review submitted successfully!');
+            saveReviewedStatus(facultyName);
+            document.getElementById('reviewForm').reset();
+            Object.keys(ratings).forEach(key => ratings[key] = 0);
+            document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
+        } catch (error) {
+            showError('Failed to submit review. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+        }
     });
 
     // Obfuscate some function names
