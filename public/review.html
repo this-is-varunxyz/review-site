@@ -162,7 +162,8 @@
 
     // Local storage key for tracking reviewed faculty
     const REVIEWED_FACULTY_KEY = 'reviewedFaculty';
-    const API_BASE_URL = window.location.origin; // Adjust if your API is on a different domain
+    // Use local API base URL for development
+    const API_BASE_URL = 'http://localhost:3001';
 
     // Disable right-click and F12
     document.addEventListener('contextmenu', function(e) {
